@@ -15,7 +15,9 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
-
+    
+    // CHALLENGE 3
+    @State private var score = 0
     
     var body: some View {
         NavigationStack {
@@ -46,6 +48,10 @@ struct ContentView: View {
             .toolbar {
                 Button("Restart", action: startGame)
             }
+            
+            // CHALLENGE 3
+            Text("Score: \(score)")
+                .font(.largeTitle)
         }
     }
     
@@ -80,6 +86,9 @@ struct ContentView: View {
             return
         }
         
+        // CHALLENGE 3
+        score += answer.count
+        
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
@@ -92,6 +101,9 @@ struct ContentView: View {
         usedWords.removeAll()
         // Setting newWord back to an empty string in case the user has left something typed into the TextField
         newWord = ""
+        
+        // CHALLENGE 3
+        score = 0
 
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsURL) {
